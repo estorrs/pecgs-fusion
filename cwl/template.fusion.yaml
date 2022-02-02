@@ -1,0 +1,23 @@
+bwts:
+  class: Directory
+  path: a/file/path
+cpu: a_int
+fq_1:
+  class: File
+  path: a/file/path
+fq_2:
+  class: File
+  path: a/file/path
+genome_db:
+  class: Directory
+  path: a/file/path
+genome_lib_dir:
+  class: Directory
+  path: a/file/path
+integrate_annotations:
+  class: File
+  path: a/file/path
+integrate_fasta:
+  class: File
+  path: a/file/path
+sample: a_string
