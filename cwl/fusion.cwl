@@ -86,6 +86,6 @@ outputs:
   type: File
 requirements:
 - class: DockerRequirement
-  dockerPull: estorrs/pecgs_fusion:0.0.1
+  dockerPull: estorrs/pecgs_fusion:0.0.2
 - class: ResourceRequirement
   ramMin: 50000
