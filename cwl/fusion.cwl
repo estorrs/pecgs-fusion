@@ -25,7 +25,7 @@ inputs:
   inputBinding:
     position: '2'
   type: File
-- id: fq2
+- id: fq_2
   inputBinding:
     position: '3'
   type: File
