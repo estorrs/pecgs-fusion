@@ -71,10 +71,10 @@ inputs:
     position: '0'
     prefix: -cpu
   type: string?
-- default: /miniconda/envs/fusion/bin
+- default: /miniconda/envs/fusion/bin:$PATH
   id: environ_PATH
   type: string?
-- default: /miniconda/envs/fusion/lib
+- default: /miniconda/envs/fusion/lib/:$LD_LIBRARY_PATH
   id: environ_LD_LIBRARY_PATH
   type: string?
 label: fusion
