@@ -8,6 +8,10 @@ arguments:
   prefix: --filter-script
   valueFrom: /pecgs-fusion/fusion/filter.pl
 baseCommand:
+- export
+- PATH="/miniconda/envs/fusion/bin:$PATH"
+- '&&'
+- python
 - /pecgs-fusion/fusion/fusion.py
 class: CommandLineTool
 cwlVersion: v1.0
@@ -40,6 +44,11 @@ inputs:
     position: '0'
     prefix: --bwts
   type: Directory
+- id: integrate_executable
+  inputBinding:
+    position: '0'
+    prefix: --integrate-executable
+  type: File
 - id: integrate_fasta
   inputBinding:
     position: '0'
@@ -50,6 +59,16 @@ inputs:
     position: '0'
     prefix: --integrate-annotations
   type: File
+- id: filter_database
+  inputBinding:
+    position: '0'
+    prefix: --filter-database
+  type: Directory
+- id: fusion_annotator_dir
+  inputBinding:
+    position: '0'
+    prefix: --fusion-annotator-dir
+  type: Directory
 - id: cpu
   inputBinding:
     position: '0'
@@ -57,21 +76,13 @@ inputs:
   type: string?
 label: fusion
 outputs:
-- id: output_summary
+- id: filtered_fusions
   outputBinding:
-    glob: output
+    glob: Merged_Fusions/Filtered*.tsv
   type: File
-- id: output_dis
+- id: total_fusions
   outputBinding:
-    glob: output_dis
-  type: File
-- id: output_germline
-  outputBinding:
-    glob: output_germline
-  type: File
-- id: output_somatic
-  outputBinding:
-    glob: output_somatic
+    glob: Merged_Fusions/Total*.tsv
   type: File
 requirements:
 - class: DockerRequirement

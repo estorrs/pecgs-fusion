@@ -2,11 +2,17 @@ bwts:
   class: Directory
   path: a/file/path
 cpu: a_int
+filter_database:
+  class: Directory
+  path: a/file/path
 fq_1:
   class: File
   path: a/file/path
 fq_2:
   class: File
+  path: a/file/path
+fusion_annotator_dir:
+  class: Directory
   path: a/file/path
 genome_db:
   class: Directory
@@ -15,6 +21,9 @@ genome_lib_dir:
   class: Directory
   path: a/file/path
 integrate_annotations:
+  class: File
+  path: a/file/path
+integrate_executable:
   class: File
   path: a/file/path
 integrate_fasta:

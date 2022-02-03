@@ -3,9 +3,10 @@
 use strict;
 use warnings;
 
-die "Usage perl combine_call.pl SAMPLE STARFUSION ERICSCRIPT INTEGRATE_summary INTEGRATE_breakpoint OUTDIR\nFilterDB and STARDB are set to be static in the script\n" if (@ARGV < 1);
+die "Usage perl combine_call.pl SAMPLE STARFUSION ERICSCRIPT INTEGRATE_summary INTEGRATE_breakpoint OUTDIR filterDB stardb annodir\nFilterDB and STARDB are set to be static in the script\n" if (@ARGV < 1);
 
-my $filterDB = "/storage1/fs1/dinglab/Active/Projects/PECGS/PECGS_pipeline/Fusion/FilterDatabase";
+#my $filterDB = "/storage1/fs1/dinglab/Active/Projects/PECGS/PECGS_pipeline/Fusion/FilterDatabase";
+my $filterDB = $ARGV[6];
 open(IN, "$filterDB/hgnc_complete_set.txt");
 #different names for the same gene
 <IN>;
@@ -102,7 +103,9 @@ print OUT1 "FusionName\tLeftBreakpoint\tRightBreakpoint\tSample\tJunctionReadCou
 print OUT3 "#FusionName\tJunctionReadCount\tSpanningFragCount\tSpliceType\tLeftGene\tLeftBreakpoint\tRightGene\tRightBreakpoint\tLargeAnchorSupport\tLeftBreakDinuc\tLeftBreakEntropy\tRightBreakDinuc\tRightBreakEntropy\tFFPM\n";
 
 #my $stardb = "/storage1/fs1/dinglab/Active/Projects/PECGS/PECGS_pipeline/Fusion/STAR-Fusion_dependencies/GRCh38_gencode_v31_CTAT_lib_Oct012019.plug-n-play/ctat_genome_lib_build_dir";
-my $stardb = "/storage1/fs1/dinglab/Active/Projects/PECGS/PECGS_pipeline/Fusion/STAR-Fusion_dependencies/GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir";
+#my $stardb = "/storage1/fs1/dinglab/Active/Projects/PECGS/PECGS_pipeline/Fusion/STAR-Fusion_dependencies/GRCh38_gencode_v37_CTAT_lib_Mar012021.plug-n-play/ctat_genome_lib_build_dir";
+my $stardb = $ARGV[7];
+
 open(REF, "$stardb/ref_annot.gtf");
 my %refdb;
 my %transname;
@@ -174,7 +177,8 @@ foreach my $g (keys %eric)
         }
 }
 
-my $annodir = "/storage1/fs1/dinglab/Active/Projects/PECGS/PECGS_pipeline/Fusion/FusionAnnotator";
+# my $annodir = "/storage1/fs1/dinglab/Active/Projects/PECGS/PECGS_pipeline/Fusion/FusionAnnotator";
+my $annodir = $ARGV[8];
 my $new_annot = `$annodir/FusionAnnotator --genome_lib_dir $stardb --annotate $outdir/STARFusion_not.tsv | $annodir/util/fusion_to_coding_region_effect.pl --fusions - --genome_lib_dir $stardb`;
 my @lines = split(/\n/, $new_annot);
 shift @lines;

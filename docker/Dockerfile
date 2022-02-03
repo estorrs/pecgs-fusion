@@ -6,9 +6,13 @@ RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.3-Linux-x86_64.
 RUN bash ~/miniconda.sh -b -p /miniconda
 ENV PATH="/miniconda/bin:$PATH"
 
-COPY . /pecgs-fusion
+# get env file seperately so it doesn't reinstall every time
+COPY ./env.yaml /pecgs-fusion/env.yaml
 RUN conda env create --file /pecgs-fusion/env.yaml 
 
+COPY . /pecgs-fusion
+
 ENV PATH="/miniconda/envs/fusion/bin:$PATH"
+ENV LD_LIBRARY_PATH="/miniconda/envs/fusion/lib/:$LD_LIBRARY_PATH"
 
 CMD /bin/bash

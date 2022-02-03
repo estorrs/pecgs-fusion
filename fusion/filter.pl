@@ -3,9 +3,11 @@
 use strict;
 use warnings;
 
-die "Usage perl filter.pl SAMPLE \n" if (@ARGV < 1);
+die "Usage perl filter.pl SAMPLE database_dir\n" if (@ARGV < 1);
 
-my $database_dir="/storage1/fs1/dinglab/Active/Projects/PECGS/PECGS_pipeline/Fusion/FilterDatabase";
+#my $database_dir="/storage1/fs1/dinglab/Active/Projects/PECGS/PECGS_pipeline/Fusion/FilterDatabase";
+my $database_dir = $ARGV[2];
+
 
 my (%black, %paralog, %manual, %noncancer, %tcga_normal, %known, %gtex, %large, %tmp);
 
@@ -66,6 +68,7 @@ while(<DA>)
 
 my $dir = $ARGV[0];
 my $sample = $ARGV[1];
+
 open(DATA, "$dir/Total_Fusions_in_$sample.tsv");
 <DATA>;
 open(OUT, ">$dir/Filtered_Fusions_in_$sample.tsv");
