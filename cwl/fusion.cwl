@@ -8,9 +8,6 @@ arguments:
   prefix: --filter-script
   valueFrom: /pecgs-fusion/fusion/filter.pl
 baseCommand:
-- export
-- PATH="/miniconda/envs/fusion/bin:$PATH"
-- '&&'
 - python
 - /pecgs-fusion/fusion/fusion.py
 class: CommandLineTool
@@ -74,6 +71,12 @@ inputs:
     position: '0'
     prefix: -cpu
   type: string?
+- default: /miniconda/envs/fusion/bin
+  id: environ_PATH
+  type: string?
+- default: /miniconda/envs/fusion/lib
+  id: environ_LD_LIBRARY_PATH
+  type: string?
 label: fusion
 outputs:
 - id: filtered_fusions
@@ -89,3 +92,7 @@ requirements:
   dockerPull: estorrs/pecgs_fusion:0.0.2
 - class: ResourceRequirement
   ramMin: 50000
+- class: EnvVarRequirement
+  envDef:
+    LD_LIBRARY_PATH: $(inputs.environ_LD_LIBRARY_PATH)
+    PATH: $(inputs.environ_PATH)
