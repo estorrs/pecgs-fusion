@@ -96,7 +96,7 @@ def run_ericscript():
     logging.info('running ericscript')
     # cmd = f'{ERICSCRIPT} -o {ERICSCRIPT_OUT} --remove -ntrim 0 --refid homo_sapiens -db {args.genome_db} -p {args.cpu} -name {args.sample} {args.fq_1} {args.fq_2}'
     cmd = '{es} -o {eo} --remove -ntrim 0 --refid homo_sapiens -db {genome_db} -p {cpu} -name {sample} {fq_1} {fq_2}'.format(
-        es=ERICSCRIPT, genome_db=args.genome_db, cpu=args.cpu, sample=args.sample, fq_1=args.fq_1, fq_2=args.fq_2)
+        es=ERICSCRIPT, eo=ERICSCRIPT_OUT, genome_db=args.genome_db, cpu=args.cpu, sample=args.sample, fq_1=args.fq_1, fq_2=args.fq_2)
     logging.info('executing command: {cmd}'.format(cmd=cmd))
     output = subprocess.check_output(cmd, shell=True)
     logging.info('tool output:')
