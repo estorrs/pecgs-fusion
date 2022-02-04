@@ -69,7 +69,7 @@ inputs:
 - id: cpu
   inputBinding:
     position: '0'
-    prefix: -cpu
+    prefix: --cpu
   type: string?
 - default: /miniconda/envs/fusion/bin:$PATH
   id: environ_PATH
