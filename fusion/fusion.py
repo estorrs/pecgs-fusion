@@ -169,7 +169,7 @@ def run_merge_fusion():
     logging.info(output)
 
     logging.info('running merge fusions filtering')
-    cmd = 'perl {filter_script} {mf} {sample} {df}'.format(
+    cmd = 'perl {filter_script} {mf} {sample} {fd}'.format(
         filter_script=args.filter_script, mf=MERGE_FUSIONS_OUT, sample=args.sample, fd=args.filter_database)
     logging.info('executing command: {cmd}'.format(cmd=cmd))
     output = subprocess.check_output(cmd, shell=True)
