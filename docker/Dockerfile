@@ -15,4 +15,7 @@ COPY . /pecgs-fusion
 ENV PATH="/miniconda/envs/fusion/bin:$PATH"
 ENV LD_LIBRARY_PATH="/miniconda/envs/fusion/lib/:$LD_LIBRARY_PATH"
 
+# Needs this to work on compute1 LSF bc persmissions are weird with how docker is launched
+RUN chmod -R +777 /miniconda/envs/fusion/share/ericscript-0.5.5-5/
+
 CMD /bin/bash
