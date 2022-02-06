@@ -91,7 +91,7 @@ requirements:
 - class: DockerRequirement
   dockerPull: estorrs/pecgs_fusion:0.0.2
 - class: ResourceRequirement
-  ramMin: 50000
+  ramMin: 100000
 - class: EnvVarRequirement
   envDef:
     LD_LIBRARY_PATH: $(inputs.environ_LD_LIBRARY_PATH)
