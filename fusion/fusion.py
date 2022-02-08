@@ -110,8 +110,8 @@ def run_star():
         os.mkdir(STAR_OUT)
     star_genome_dir = os.path.join(args.genome_lib_dir, 'ref_genome.fa.star.idx')
     # cmd = f'STAR --runThreadN 80 --genomeDir {star_genome_dir} --readFilesCommand zcat --readFilesIn {args.fq_1} {args.fq_2} --outSAMtype BAM Unsorted --outFileNamePrefix {STAR_OUT}/ --chimSegmentMin 18 --chimOutType WithinBAM --outSAMunmapped Within'
-    cmd = 'STAR --runThreadN 80 --genomeDir {star_genome_dir} --readFilesCommand zcat --readFilesIn {fq_1} {fq_2} --outSAMtype BAM Unsorted --outFileNamePrefix {so}/ --chimSegmentMin 18 --chimOutType WithinBAM --outSAMunmapped Within'.format(
-        star_genome_dir=star_genome_dir, fq_1=args.fq_1, fq_2=args.fq_2, so=STAR_OUT)
+    cmd = 'STAR --runThreadN {cpu} --genomeDir {star_genome_dir} --readFilesCommand zcat --readFilesIn {fq_1} {fq_2} --outSAMtype BAM Unsorted --outFileNamePrefix {so}/ --chimSegmentMin 18 --chimOutType WithinBAM --outSAMunmapped Within'.format(
+        cpu=int(args.cpu) * 2, star_genome_dir=star_genome_dir, fq_1=args.fq_1, fq_2=args.fq_2, so=STAR_OUT)
     logging.info('executing command: {cmd}'.format(cmd=cmd))
     output = subprocess.check_output(cmd, shell=True)
     logging.info('tool output:')
