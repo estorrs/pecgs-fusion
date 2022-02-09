@@ -66,11 +66,12 @@ inputs:
     position: '0'
     prefix: --fusion-annotator-dir
   type: Directory
-- id: cpu
+- default: 1
+  id: cpu
   inputBinding:
     position: '0'
     prefix: --cpu
-  type: string?
+  type: int?
 - default: /miniconda/envs/fusion/bin:$PATH
   id: environ_PATH
   type: string?
@@ -91,6 +92,7 @@ requirements:
 - class: DockerRequirement
   dockerPull: estorrs/pecgs_fusion:0.0.2
 - class: ResourceRequirement
+  coresMin: $(inputs.cpu)
   ramMin: 100000
 - class: EnvVarRequirement
   envDef:
