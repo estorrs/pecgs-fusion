@@ -3,6 +3,7 @@ import glob
 import os
 import logging
 import shutil
+import stat
 import subprocess
 # we are python2 :(
 # from pathlib import Path
@@ -136,6 +137,19 @@ def run_integrate():
     if not os.path.exists(INTEGRATE_OUT):
         os.mkdir(INTEGRATE_OUT)
     # cmd = f'Integrate fusion -reads {INTEGRATE_OUT}/reads.txt -sum {INTEGRATE_OUT}/summary.tsv -ex {INTEGRATE_OUT}/exons.tsv -bk {INTEGRATE_OUT}/breakpoints.tsv -vcf {INTEGRATE_OUT}/bk_sv.vcf -bedpe {INTEGRATE_OUT}/fusions.bedpe {INTEGRATE_OUT} {args.integrate_annotations} {args.bwts} {STAR_OUT}/Aligned.out.sorted.bam {STAR_OUT}/Aligned.out.sorted.bam'
+
+    # hacky but we need to see if Integrate is executable, and change it if not.
+    # needs this to work with compute1 cromwell workflow
+    logging.info('checking Integrate script permissions')
+    is_executable = os.access(args.integrate_executable, os.X_OK)
+    logging.info('{a} is executable: {b}'.format(
+        a=args.integrate_executable, b=is_executable))
+
+    if not is_executable:
+        logging.info('making Integrate executable')
+        st = os.stat(args.integrate_executable)
+        os.chmod(args.integrate_executable, st.st_mode | stat.S_IEXEC)
+
     cmd = '{ie} fusion -reads {io}/reads.txt -sum {io}/summary.tsv -ex {io}/exons.tsv -bk {io}/breakpoints.tsv -vcf {io}/bk_sv.vcf -bedpe {io}/fusions.bedpe {integrate_fasta} {integrate_annotations} {bwts} {so}/Aligned.out.sorted.bam {so}/Aligned.out.sorted.bam'.format(
         ie=args.integrate_executable, io=INTEGRATE_OUT, integrate_fasta=args.integrate_fasta, integrate_annotations=args.integrate_annotations, bwts=args.bwts, so=STAR_OUT)
     logging.info('executing command: {cmd}'.format(cmd=cmd))
