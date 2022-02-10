@@ -174,6 +174,20 @@ def run_merge_fusion():
     # Path(MERGE_FUSIONS_OUT).mkdir(parents=True, exist_ok=True)
     if not os.path.exists(MERGE_FUSIONS_OUT):
         os.mkdir(MERGE_FUSIONS_OUT)
+
+    # hacky but we need to see if FusionAnnotator is executable, and change it if not.
+    # needs this to work with compute1 cromwell workflow
+    logging.info('checking FusionAnnotator script permissions')
+    exc_fp = os.path.join(args.fusion_annotator_dir, 'FusionAnnotator')
+    is_executable = os.access(exc_fp, os.X_OK)
+    logging.info('{a} is executable: {b}'.format(
+        a=exc_fp, b=is_executable))
+
+    if not is_executable:
+        logging.info('making FusionAnnotator executable')
+        st = os.stat(exc_fp)
+        os.chmod(exc_fp, st.st_mode | stat.S_IEXEC)
+
     # cmd = f'perl {args.combine_call_script} {args.sample} {FUSION_OUT}/star-fusion.fusion_predictions.abridged.coding_effect.tsv {ERICSCRIPT_OUT}/{args.sample}.results.total.tsv {INTEGRATE_OUT}/summary.tsv {INTEGRATE_OUT}/breakpoints.tsv {MERGE_FUSIONS_OUT}'
     cmd = 'perl {combine_call_script} {sample} {fo}/star-fusion.fusion_predictions.abridged.coding_effect.tsv {eo}/{sample}.results.total.tsv {io}/summary.tsv {io}/breakpoints.tsv {mf} {fd} {sb} {fa}'.format(
         combine_call_script=args.combine_call_script, sample=args.sample, fo=FUSION_OUT, eo=ERICSCRIPT_OUT, io=INTEGRATE_OUT, mf=MERGE_FUSIONS_OUT, fd=args.filter_database, sb=args.genome_lib_dir, fa=args.fusion_annotator_dir)
