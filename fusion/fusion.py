@@ -175,7 +175,7 @@ def run_merge_fusion():
     if not os.path.exists(MERGE_FUSIONS_OUT):
         os.mkdir(MERGE_FUSIONS_OUT)
 
-    # hacky but we need to see if FusionAnnotator is executable, and change it if not.
+    # hacky but we need to see if FusionAnnotator and fusion_to_coding_region_effect.pl are executable, and change it if not.
     # needs this to work with compute1 cromwell workflow
     logging.info('checking FusionAnnotator script permissions')
     exc_fp = os.path.join(args.fusion_annotator_dir, 'FusionAnnotator')
@@ -184,7 +184,11 @@ def run_merge_fusion():
         a=exc_fp, b=is_executable))
 
     if not is_executable:
-        logging.info('making FusionAnnotator executable')
+        logging.info('making FusionAnnotator and fusion_to_coding_region_effect.pl executable')
+        st = os.stat(exc_fp)
+        os.chmod(exc_fp, st.st_mode | stat.S_IEXEC)
+
+        exc_fp = os.path.join(args.fusion_annotator_dir, 'util', 'fusion_to_coding_region_effect.pl')
         st = os.stat(exc_fp)
         os.chmod(exc_fp, st.st_mode | stat.S_IEXEC)
 
