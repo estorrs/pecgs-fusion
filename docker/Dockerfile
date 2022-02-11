@@ -17,5 +17,7 @@ ENV LD_LIBRARY_PATH="/miniconda/envs/fusion/lib/:$LD_LIBRARY_PATH"
 
 # Needs this to work on compute1 LSF bc persmissions are weird with how docker is launched
 RUN chmod -R +777 /miniconda/envs/fusion/share/ericscript-0.5.5-5/
+# need to make this executable for the merge script
+RUN chmod +x /miniconda/envs/fusion/lib/STAR-Fusion/FusionAnnotator/util/fusion_to_coding_region_effect.pl
 
 CMD /bin/bash
