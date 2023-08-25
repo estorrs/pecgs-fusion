@@ -42,7 +42,7 @@ while(<IN>)
 	{
 		$gtex{$l[0]} = 1;
 	}
-	$star{$id} = "$l[0]\t$l[5]\t$l[7]\t$sample\t$l[1]\t$l[2]\t$l[13]\t$l[19]";
+        $star{$id} = "$l[0]\t$l[7]\t$l[9]\t$sample\t$l[1]\t$l[2]\t$l[13]\t$l[19]";
 	my @m = split(/\-\-/, $l[0]);
 	if(exists $hash{$m[0]})
 	{
